@@ -2,8 +2,15 @@ const socket = io(); // ✅ Connect to Socket.io server
 let currentRoom = "general";
 let typingTimeout;
 
+
+// ✅ Ensure user is logged in before connecting
+const username = sessionStorage.getItem("username");
+if (!username) {
+    window.location.href = "login.html"; // ✅ Redirect to login if no username
+}
+
 // ✅ Join Default Room
-socket.emit('joinRoom', { room: currentRoom });
+socket.emit('joinRoom', { room: currentRoom, user: username });
 
 // ✅ Function to Send Messages
 function sendMessage() {
@@ -11,7 +18,7 @@ function sendMessage() {
     const message = messageInput.value.trim();
 
     if (message !== "") {
-        socket.emit('sendMessage', { room: currentRoom, message, user: "Anonymous" });
+        socket.emit('sendMessage', { room: currentRoom, message, user: username });
 
         // ✅ Remove typing notification when message is sent
         socket.emit('stopTyping', { room: currentRoom });
@@ -55,6 +62,18 @@ socket.on('receiveMessage', (data) => {
     addMessageToChat(data.user, data.message);
 });
 
+// ✅ Function to Update Members List
+socket.on('updateMembers', (members) => {
+    const membersList = document.getElementById("members-list");
+    membersList.innerHTML = ""; // ✅ Clear current list
+
+    members.forEach(member => {
+        const listItem = document.createElement("li");
+        listItem.textContent = member;
+        membersList.appendChild(listItem);
+    });
+});
+
 // ✅ Load Previous Messages When Joining a Room
 socket.on('loadMessages', (messages) => {
     clearChatBox(); // ✅ Clear chat before loading new room messages
@@ -67,8 +86,8 @@ socket.on('loadMessages', (messages) => {
 document.getElementById("joinRoomButton").addEventListener("click", () => {
     const newRoom = document.getElementById("roomInput").value.trim();
     if (newRoom && newRoom !== currentRoom) {
-        socket.emit('leaveRoom', { room: currentRoom });
-        socket.emit('joinRoom', { room: newRoom });
+        socket.emit('leaveRoom', { room: currentRoom, user: username });
+        socket.emit('joinRoom', { room: newRoom, user: username });
         currentRoom = newRoom;
         document.getElementById("room-name").textContent = newRoom;
     }
@@ -76,10 +95,10 @@ document.getElementById("joinRoomButton").addEventListener("click", () => {
 
 // ✅ Leave Room Functionality (Return to "general" Room)
 document.getElementById("leaveRoomButton").addEventListener("click", () => {
-    socket.emit('leaveRoom', { room: currentRoom });
+    socket.emit('leaveRoom', { room: currentRoom, user: username });
     currentRoom = "general";
     document.getElementById("room-name").textContent = "General";
-    socket.emit('joinRoom', { room: "general" });
+    socket.emit('joinRoom', { room: "general", user: username });
 });
 
 // ✅ Send Message on Button Click

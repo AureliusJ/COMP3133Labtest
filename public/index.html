@@ -12,7 +12,7 @@
             <h2>Chat App</h2>
             <p><strong>Room name:</strong> <span id="room-name">General</span></p>
             <p><strong>Members:</strong></p>
-            <ul id="user-list"></ul>
+            <ul id="members-list"></ul>
             <input type="text" id="roomInput" placeholder="Enter room name...">
             <button id="joinRoomButton">Join Room</button>
         </div>
@@ -30,6 +30,11 @@
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
+    <script>
+        if (!sessionStorage.getItem("username")) {
+            window.location.href = "login.html"; // ✅ Redirect if not logged in
+        }
+    </script>
     <script src="js/socket.js"></script>
 </body>
 </html>
