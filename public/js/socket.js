@@ -12,6 +12,13 @@ if (!username) {
 // ✅ Join Default Room
 socket.emit('joinRoom', { room: currentRoom, user: username });
 
+
+// ✅ Function to Format Date
+function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleString(); // ✅ Display date in local format
+}
+
 // ✅ Function to Send Messages
 function sendMessage() {
     const messageInput = document.getElementById('messageInput');
@@ -28,7 +35,7 @@ function sendMessage() {
 }
 
 // ✅ Function to Add Messages to the Chat Box
-function addMessageToChat(user, message, isSystem = false) {
+function addMessageToChat(user, message, date_sent, isSystem = false) {
     const chatBox = document.getElementById('chat-box');
 
     // ✅ Remove old typing messages before adding a new one
@@ -40,7 +47,7 @@ function addMessageToChat(user, message, isSystem = false) {
     }
 
     const messageElement = document.createElement('p');
-    messageElement.innerHTML = `<strong>${user}:</strong> ${message}`;
+    messageElement.innerHTML = `<strong>${user}</strong> <span class="timestamp">(${formatDate(date_sent)})</span>: ${message}`;
 
     // ✅ Add an ID to the typing message to prevent duplicates
     if (isSystem) {
@@ -59,7 +66,7 @@ function clearChatBox() {
 
 // ✅ Listen for Received Messages
 socket.on('receiveMessage', (data) => {
-    addMessageToChat(data.user, data.message);
+    addMessageToChat(data.user, data.message, data.date_sent);
 });
 
 // ✅ Function to Update Members List
@@ -78,7 +85,7 @@ socket.on('updateMembers', (members) => {
 socket.on('loadMessages', (messages) => {
     clearChatBox(); // ✅ Clear chat before loading new room messages
     messages.forEach(msg => {
-        addMessageToChat(msg.from_user, msg.message);
+        addMessageToChat(msg.from_user, msg.message, msg.date_sent);
     });
 });
 

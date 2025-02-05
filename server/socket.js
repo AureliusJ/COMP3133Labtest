@@ -42,15 +42,25 @@ module.exports = (io) => {
         }
     });
 
-    
-        // ✅ Send Message & Save to DB
-        socket.on('sendMessage', async ({ room, message, user }) => {
-            const newMessage = new Message({ room, message, from_user: user });
+
+         // ✅ Send Message & Save to DB
+         socket.on('sendMessage', async ({ room, message, user }) => {
+            const newMessage = new Message({
+                room,
+                message,
+                from_user: user,
+                date_sent: new Date(), // ✅ Store timestamp in DB
+            });
+
             await newMessage.save();
 
-            io.to(room).emit('receiveMessage', { user, message });
-        });
-
+            // ✅ Emit message including timestamp
+            io.to(room).emit('receiveMessage', {
+                user,
+                message,
+                date_sent: newMessage.date_sent,
+            });
+            
         // ✅ Typing Indicator
         socket.on('typing', ({ room, user }) => {
             socket.to(room).emit('userTyping', user);
@@ -66,4 +76,6 @@ module.exports = (io) => {
             console.log('❌ User disconnected:', socket.id);
         });
     });
-};
+});
+
+}

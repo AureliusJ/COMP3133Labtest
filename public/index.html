@@ -20,6 +20,7 @@
             <div class="chat-header">
                 <h2>Chat Room</h2>
                 <button id="leaveRoomButton">Leave Room</button>
+                <button id="logoutButton" class="logout-btn">Logout</button>
             </div>
             <div id="chat-box" class="chat-box"></div>
             <div class="chat-input">
@@ -34,6 +35,14 @@
         if (!sessionStorage.getItem("username")) {
             window.location.href = "login.html"; // ✅ Redirect if not logged in
         }
+    </script>
+
+    <script>
+        // ✅ Logout Functionality
+        document.getElementById("logoutButton").addEventListener("click", () => {
+            sessionStorage.removeItem("username"); // ✅ Remove username from session storage
+            window.location.href = "login.html"; // ✅ Redirect to login page
+        });
     </script>
     <script src="js/socket.js"></script>
 </body>

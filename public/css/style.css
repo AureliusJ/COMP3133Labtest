@@ -47,6 +47,35 @@ button:hover {
     background-color: #003399;
 }
 
+.leave-btn, .logout-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.logout-btn {
+    background-color: #ff6600;
+}
+
+.leave-btn:hover {
+    background-color: darkred;
+}
+
+.logout-btn:hover {
+    background-color: darkorange;
+}
+
+.timestamp {
+    font-size: 12px;
+    color: gray;
+    margin-left: 5px;
+}
+
 .chat-container {
     display: flex;
     width: 80%;
