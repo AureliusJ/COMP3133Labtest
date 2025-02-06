@@ -92,16 +92,21 @@ module.exports = (io) => {
             });
         });
 
-        // ✅ Typing Indicator
+                // ✅ Typing Indicator 
         socket.on("typing", ({ room, user }) => {
+            if (!room || !user) return;
+
             console.log(`📝 Typing event received from ${user} in ${room}`);
-            io.to(room).emit("userTyping", { user }); // ✅ Broadcast event to room
+            socket.to(room).emit("userTyping", { user }); // ✅ Broadcast event to room
         });
-        
+
         socket.on("stopTyping", ({ room }) => {
+            if (!room) return;
+
             console.log(`⏹ Stop typing event received in ${room}`);
-            io.to(room).emit("stopTyping"); // ✅ Broadcast to all users
+            socket.to(room).emit("stopTyping"); // ✅ Broadcast to all users
         });
+
         
 
         // ✅ Handle Disconnect
