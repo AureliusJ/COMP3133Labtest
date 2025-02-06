@@ -93,14 +93,16 @@ module.exports = (io) => {
         });
 
         // ✅ Typing Indicator
-        socket.on('typing', ({ room, user }) => {
-            socket.to(room).emit('userTyping', user);
+        socket.on("typing", ({ room, user }) => {
+            console.log(`📝 Typing event received from ${user} in ${room}`);
+            io.to(room).emit("userTyping", { user }); // ✅ Broadcast event to room
         });
-
-        // ✅ Stop Typing Indicator
-        socket.on('stopTyping', ({ room }) => {
-            socket.to(room).emit('stopTyping');
+        
+        socket.on("stopTyping", ({ room }) => {
+            console.log(`⏹ Stop typing event received in ${room}`);
+            io.to(room).emit("stopTyping"); // ✅ Broadcast to all users
         });
+        
 
         // ✅ Handle Disconnect
         socket.on('disconnect', () => {

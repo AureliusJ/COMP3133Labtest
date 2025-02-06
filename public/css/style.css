@@ -1,6 +1,7 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #EBF5EE; /* Mint Cream */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,9 +9,10 @@ body {
     margin: 0;
 }
 
+/* Signup/Login Container */
 .signup-container {
     width: 30%;
-    background: #fff;
+    background: white;
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -18,12 +20,14 @@ body {
 }
 
 h2 {
-    background-color: #0044cc;
+    background-color: #78A1BB; /* Air Superiority Blue */
     color: white;
     padding: 10px;
     margin-top: 0;
+    border-radius: 5px;
 }
 
+/* Inputs */
 input {
     width: 90%;
     padding: 10px;
@@ -32,10 +36,11 @@ input {
     border-radius: 4px;
 }
 
+/* Buttons */
 button {
     padding: 10px;
     width: 95%;
-    background-color: #0044cc;
+    background-color: #78A1BB; /* Air Superiority Blue */
     color: white;
     border: none;
     border-radius: 4px;
@@ -44,11 +49,12 @@ button {
 }
 
 button:hover {
-    background-color: #003399;
+    background-color: #5C8BA8;
 }
 
+/* Leave and Logout Buttons */
 .leave-btn, .logout-btn {
-    background-color: red;
+    background-color: #BFA89E; /* Khaki */
     color: white;
     border: none;
     padding: 8px 12px;
@@ -59,36 +65,32 @@ button:hover {
 }
 
 .logout-btn {
-    background-color: #ff6600;
+    background-color: #8B786D; /* Cinereous */
 }
 
 .leave-btn:hover {
-    background-color: darkred;
+    background-color: #A38B7C;
 }
 
 .logout-btn:hover {
-    background-color: darkorange;
+    background-color: #75685F;
 }
 
-.timestamp {
-    font-size: 12px;
-    color: gray;
-    margin-left: 5px;
-}
-
+/* Chat Container */
 .chat-container {
     display: flex;
     width: 80%;
     height: 80vh;
-    background: #fff;
+    background: white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
 }
 
+/* Sidebar */
 .sidebar {
     width: 25%;
-    background: #2c3e50;
+    background: #283044; /* Space Cadet */
     color: white;
     padding: 20px;
     display: flex;
@@ -108,13 +110,13 @@ button:hover {
     margin-top: 10px;
     border: none;
     border-radius: 4px;
-    width: 100%;
+    width: 100%; /* Ensures the input box is the same width as buttons */
+    box-sizing: border-box; /* Prevents overflow issues */
 }
-
 .sidebar button {
     padding: 10px;
     width: 100%;
-    background-color: #2980b9;
+    background-color: #78A1BB; /* Air Superiority Blue */
     color: white;
     border: none;
     border-radius: 4px;
@@ -123,9 +125,10 @@ button:hover {
 }
 
 .sidebar button:hover {
-    background-color: #21618c;
+    background-color: #5C8BA8;
 }
 
+/* Chat Area */
 .chat-area {
     flex: 1;
     display: flex;
@@ -133,7 +136,7 @@ button:hover {
 }
 
 .chat-header {
-    background: #0044cc;
+    background: #78A1BB; /* Air Superiority Blue */
     color: white;
     padding: 10px;
     display: flex;
@@ -142,7 +145,7 @@ button:hover {
 }
 
 .chat-header button {
-    background: #e74c3c;
+    background: #BFA89E; /* Khaki */
     color: white;
     border: none;
     padding: 8px;
@@ -153,9 +156,10 @@ button:hover {
     flex: 1;
     padding: 10px;
     overflow-y: auto;
-    background: #f9f9f9;
+    background: #EBF5EE; /* Mint Cream */
 }
 
+/* Chat Input */
 .chat-input {
     display: flex;
     padding: 10px;
@@ -164,26 +168,51 @@ button:hover {
 }
 
 .chat-input input {
-    flex: 1;
+    flex: 4;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .chat-input button {
+    flex: 1;
     padding: 10px;
-    margin-left: 5px;
-    background: #0044cc;
+    background: #78A1BB; /* Air Superiority Blue */
     color: white;
     border: none;
     cursor: pointer;
 }
 
-.signup-container {
-    width: 30%;
-    margin: 100px auto;
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+.chat-input button:hover {
+    background-color: #5C8BA8;
+}
+
+/* Timestamp */
+.timestamp {
+    font-size: 12px;
+    color: gray;
+    margin-left: 5px;
+}
+
+/* Private Chat */
+.private-chat {
+    margin-top: 15px;
+}
+
+.private-chat input {
+    width: 100%; 
+    padding: 10px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box; 
+}
+
+.private-chat button {
+    width: 100%;
+    background-color: #8B786D; /* Cinereous */
+}
+
+.private-chat button:hover {
+    background-color: #75685F;
 }

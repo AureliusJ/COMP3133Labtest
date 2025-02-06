@@ -151,24 +151,41 @@ document.getElementById("sendPrivateMessageButton").addEventListener("click", se
 
 /** ✅ Typing Indicator **/
 document.getElementById("messageInput").addEventListener("keypress", () => {
-    socket.emit('typing', { room: currentRoom, user: username });
+    console.log("🚀 Typing event emitted: ", { room: currentRoom, user: username });
+    socket.emit("typing", { room: currentRoom, user: username });
 
-    // ✅ Prevent multiple typing indicators
     clearTimeout(typingTimeout);
     typingTimeout = setTimeout(() => {
-        socket.emit('stopTyping', { room: currentRoom });
+        console.log("⌛ Stopping typing event...");
+        socket.emit("stopTyping", { room: currentRoom });
     }, 3000);
 });
 
-/** ✅ Remove Typing Indicator When User Stops Typing **/
-socket.on('stopTyping', () => {
-    const typingMsg = document.getElementById('typing-message');
+socket.on("userTyping", (data) => {
+    console.log("📥 Received typing event from:", data.user);
+    
+    const chatBox = document.getElementById("chat-box");
+
+    // ✅ Remove any existing typing indicator
+    let existingTypingIndicator = document.getElementById("typing-message");
+    if (existingTypingIndicator) {
+        existingTypingIndicator.remove();
+    }
+
+    // ✅ Create a new typing indicator
+    const typingIndicator = document.createElement("p");
+    typingIndicator.id = "typing-message";
+    typingIndicator.style.color = "gray";
+    typingIndicator.innerHTML = `<em>${data.user} is typing...</em>`;
+
+    chatBox.appendChild(typingIndicator);
+    chatBox.scrollTop = chatBox.scrollHeight;
+});
+
+socket.on("stopTyping", () => {
+    console.log("🛑 Received stop typing event");
+    const typingMsg = document.getElementById("typing-message");
     if (typingMsg) {
         typingMsg.remove();
     }
-});
-
-/** ✅ Show Typing Indicator **/
-socket.on('userTyping', (user) => {
-    addMessageToChat("System", `${user} is typing...`, true);
 });
