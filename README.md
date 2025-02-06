@@ -63,4 +63,3 @@ It includes features such as:
 ```sh
 git clone https://github.com/AureliusJ/COMP3133Labtest
 cd studentID_lab_test1_chat_app
-localhost will be at 5000
